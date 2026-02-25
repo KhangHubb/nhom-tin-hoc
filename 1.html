@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực Đơn Sáng Tạo</title>
+    <!-- Import Font chữ đẹp từ Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --dark-color: #2d3436;
+            --light-bg: #f7f9fc;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+        }
+
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* --- Filter Buttons --- */
+        .filter-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: white;
+            color: var(--dark-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        /* --- Menu Grid --- */
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- Menu Card Design --- */
+        .menu-item {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: block;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .menu-item.hide {
+            display: none;
+        }
+
+        .card-image {
+            height: 220px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .order-btn {
+            display: inline-block;
+            padding: 8px 25px;
+            background-color: var(--dark-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--dark-color);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .filter-btn { margin: 5px; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Thực Đơn Trường Học</h1>
+        <p>Thưởng thức hương vị tuyệt vời mỗi ngày</p>
+    </header>
+
+    <!-- Nút lọc món ăn -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterMenu('all')">Tất cả</button>
+        <button class="filter-btn" onclick="filterMenu('food')">Đồ Ăn</button>
+        <button class="filter-btn" onclick="filterMenu('drink')">Đồ Uống</button>
+    </div>
+
+    <div class="menu-container">
+
+        <!-- Món 1: Đồ ăn -->
+        <div class="menu-item food">
+            <div class="card-image">
+                <span class="price-tag">25.000đ</span>
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bánh Mì">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Bánh Mì Đặc Biệt</h3>
+                <p class="card-desc">Bánh mì giòn rụm, nhân thịt nướng thơm lừng, pate và đồ chua.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- Món 2: Đồ uống -->
+        <div class="menu-item drink">
+            <div class="card-image">
+                <span class="price-tag">15.000đ</span>
+                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cà Phê">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cà Phê Sữa Đá</h3>
+                <p class="card-desc">Cà phê đậm đà vị truyền thống, sữa đặc béo ngậy.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- Món 3: Đồ ăn -->
+        <div class="menu-item food">
+            <div class="card-image">
+                <span class="price-tag">35.000đ</span>
+                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mì Ý">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Mì Ý Sốt Bò Bằm</h3>
+                <p class="card-desc">Sợi mì dai ngon sốt cà chua thịt bò bằm đậm đà.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- Món 4: Đồ uống -->
+        <div class="menu-item drink">
+            <div class="card-image">
+                <span class="price-tag">20.000đ</span>
+                <img src="https://file.hstatic.net/1000135323/article/h2_65128a10bb4c437d954e214a1efa54da.jpg" alt="Trà Sữa">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Trà Sữa Trân Châu</h3>
+                <p class="card-desc">Trà sữa thơm ngon kết hợp với trân châu đường đen.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- Món 5: Đồ ăn -->
+        <div class="menu-item food">
+            <div class="card-image">
+                <span class="price-tag">30.000đ</span>
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Pizza Mini</h3>
+                <p class="card-desc">Pizza phô mai tan chảy, xúc xích và rau củ tươi ngon.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- Món 6: Đồ uống -->
+        <div class="menu-item drink">
+            <div class="card-image">
+                <span class="price-tag">18.000đ</span>
+                <img src="https://giadinh.mediacdn.vn/296230595582509056/2023/4/10/cach-lam-sinh-to-bo-vtcnews-22360256-1681090998233-16810909983411504147883.jpg" alt="Sinh Tố">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Sinh Tố Bơ</h3>
+                <p class="card-desc">Bơ sáp xay nhuyễn cùng sữa tươi, béo ngậy và bổ dưỡng.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- MÓN MỚI 1: Đồ ăn -->
+        <div class="menu-item food">
+            <div class="card-image">
+                <span class="price-tag">35.000đ</span>
+                <img src="https://cdn.eva.vn/upload/1-2022/images/2022-03-29/image2-1648527218-877-width860height493.jpg" alt="Cơm Gà">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cơm Gà Chiên</h3>
+                <p class="card-desc">Cơm trắng dẻo thơm ăn kèm gà chiên giòn rụm sốt cay.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- MÓN MỚI 2: Đồ ăn -->
+        <div class="menu-item food">
+            <div class="card-image">
+                <span class="price-tag">10.000đ</span>
+                <img src="https://mayviendong.vn/wp-content/uploads/2021/06/banh-bao-nhan-thit-dam-da-kho-quen.jpg" alt="Bánh Bao">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Bánh Bao Nóng</h3>
+                <p class="card-desc">Bánh bao nhân thịt trứng cút nóng hổi, mềm mại.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- MÓN MỚI 3: Đồ uống -->
+        <div class="menu-item drink">
+            <div class="card-image">
+                <span class="price-tag">12.000đ</span>
+                <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nước Cam">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Nước Cam Tươi</h3>
+                <p class="card-desc">Cam tươi ép nguyên chất, bổ sung Vitamin C.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+        <!-- MÓN MỚI 4: Đồ uống -->
+        <div class="menu-item drink">
+            <div class="card-image">
+                <span class="price-tag">10.000đ</span>
+                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Trà Chanh">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Trà Chanh Tươi</h3>
+                <p class="card-desc">Trà thảo mộc thơm mát kết hợp chanh tươi giải nhiệt.</p>
+                <a href="#" class="order-btn">Đặt ngay</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Thực Đơn Trường Học - Ngon & Bổ Dưỡng</p>
+    </footer>
+
+    <script>
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.toLowerCase().includes(category === 'all' ? 'tất cả' : (category === 'food' ? 'đồ ăn' : 'đồ uống'))) {
+                    btn.classList.add('active');
+                }
+            });
+
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.classList.remove('hide');
+                } else {
+                    if (item.classList.contains(category)) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
